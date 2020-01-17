@@ -3,7 +3,7 @@ const parseStringToArray = require("../utils/parseStringToArray");
 
 class SearchController {
   async index(request, response) {
-    const { latitude, logitude, techs: techsString } = request.query;
+    const { latitude, longitude, techs: techsString } = request.query;
     const techs = parseStringToArray(techsString);
     const devs = await Dev.find({
       techs: {
@@ -13,13 +13,13 @@ class SearchController {
         $near: {
           $geometry: {
             type: "Point",
-            coordinates: [longitude, latitude]
+            coordinates: [latitude, longitude]
           },
           $maxDistance: 10000 // 10km
         }
       }
     });
-    return response.json();
+    return response.json(devs);
   }
 }
 
