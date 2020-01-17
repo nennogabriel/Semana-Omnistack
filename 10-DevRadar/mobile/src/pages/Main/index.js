@@ -16,7 +16,7 @@ export default function Main({ navigation }) {
   const [currentRegion, setCurrentRegion] = useState(null);
   const [keyboardHeight, setKeyboardHeight] = useState(20);
   const [devs, setDevs] = useState([]);
-  const [techs, setTechs] = useState([]);
+  const [techs, setTechs] = useState("");
 
   useEffect(() => {
     async function loadInitialPosition() {
@@ -45,7 +45,7 @@ export default function Main({ navigation }) {
       params: {
         latitude,
         longitude,
-        techs: "React"
+        techs
       }
     });
 
@@ -56,14 +56,11 @@ export default function Main({ navigation }) {
     setCurrentRegion(region);
   }
 
-  useEffect(() => {}, []);
-
   if (!currentRegion) {
     return null;
   }
   Keyboard.addListener("keyboardDidShow", e => {
-    console.log(e);
-    setKeyboardHeight(270);
+    setKeyboardHeight(e.endCoordinates.height + 50);
   });
   Keyboard.addListener("keyboardDidHide", () => {
     setKeyboardHeight(20);
@@ -103,7 +100,7 @@ export default function Main({ navigation }) {
           ))}
       </Map>
       <SearchForm keyboardHeight={keyboardHeight}>
-        <Input />
+        <Input value={techs} onChangeText={setTechs} />
         <Button onPress={loadDevs}>
           <MaterialIcons name="my-location" size={20} color="#fff" />
         </Button>
