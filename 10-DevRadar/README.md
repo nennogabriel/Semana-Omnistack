@@ -6,7 +6,9 @@ Projeto realizando durante a semana Omnistack entre os dias 13 e 17 de janeiro d
 
 Objetivo de iniciar o estudo com as ferramentas de geolocalização e interação em websockets entre plataformas, servidor, web e mobile.
 
-## ScreenShoots
+## Screenshoots
+
+![gif](/10-DevRadar/screenshots/DevRadar.gif?raw=true "animação websocket")
 
 ## Instruções de Instalação:
 
