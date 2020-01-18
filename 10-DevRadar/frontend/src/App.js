@@ -11,19 +11,20 @@ function App() {
 
   useEffect(() => {
     async function loadDevs() {
-      const response = await api.get("/Devs");
+      const response = await api.get("/devs/");
       setDevs(response.data);
     }
     loadDevs();
   }, []);
 
-  function handleAddDev(data) {
-    async function run() {
-      const response = await api.post("/devs", data);
+  async function handleAddDev(data) {
+    const response = await api.post("/devs/", data);
+    setDevs([...devs, response.data]);
+  }
 
-      setDevs([...devs, response.data]);
-    }
-    run();
+  function handleDeleteDev(id) {
+    api.delete(`/devs/${id}`);
+    setDevs(devs.filter(dev => dev._id !== id));
   }
   return (
     <div id="app">
@@ -34,7 +35,7 @@ function App() {
       <main>
         <ul>
           {devs.map(dev => (
-            <DevItem dev={dev} key={dev._id} />
+            <DevItem dev={dev} key={dev._id} btnDelete={handleDeleteDev} />
           ))}
         </ul>
       </main>

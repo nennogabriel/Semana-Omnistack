@@ -2,7 +2,7 @@ import React from "react";
 
 import "./styles.css";
 
-export default function DevItem({ dev }) {
+export default function DevItem({ dev, btnDelete }) {
   return (
     <li className="dev-item">
       <header>
@@ -13,9 +13,12 @@ export default function DevItem({ dev }) {
         </div>
       </header>
       <p>{dev.bio}</p>
-      <a href={`http://github.com/${dev.github_username}`}>
-        Acessar perfil no Github
-      </a>
+      <div>
+        <a href={`http://github.com/${dev.github_username}`}>
+          Acessar perfil no Github
+        </a>
+        <button onClick={() => btnDelete(dev._id)}>X</button>
+      </div>
     </li>
   );
 }

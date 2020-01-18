@@ -2,6 +2,17 @@ import React, { useState, useEffect } from "react";
 
 import "./styles.css";
 
+//this should be in another file and imported it here
+function randRangeDistance(original, max) {
+  // aproximate 0.001° = 111m
+  // move at least 200m from original point.
+  // moving straight, do not need to verify the distance by radius.
+  const direction = Math.floor(Math.random() * 500 * 10000) % 2 ? 1 : -1;
+  const distance =
+    ((Math.floor(Math.random() * max * 10000) % max) + 1) * 0.001 * direction;
+  return original + distance;
+}
+
 export default function DevForm({ onSubmit }) {
   const [github_username, setGithubUsername] = useState("");
   const [techs, setTechs] = useState("");
@@ -31,10 +42,9 @@ export default function DevForm({ onSubmit }) {
     await onSubmit({
       github_username,
       techs,
-      latitude,
-      longitude
+      latitude: randomize ? randRangeDistance(latitude, 7) : latitude,
+      longitude: randomize ? randRangeDistance(longitude, 7) : longitude
     });
-
     setGithubUsername("");
     // setTechs("");
   }
@@ -93,8 +103,8 @@ export default function DevForm({ onSubmit }) {
           type="checkbox"
           name="randomize"
           id="randomize"
+          onChange={e => setRandomize(e.target.checked)}
           checked={randomize}
-          onClick={e => setRandomize(!randomize)}
         />
       </div>
       <button type="submit">Salvar</button>

@@ -12,7 +12,12 @@ import {
 } from "expo-location";
 
 import api from "../../services/api";
-import { connect, disconnect, subscribeToNewDevs } from "../../services/socket";
+import {
+  connect,
+  disconnect,
+  subscribeToNewDevs,
+  subscribeToExcludeDevs
+} from "../../services/socket";
 
 export default function Main({ navigation }) {
   const [currentRegion, setCurrentRegion] = useState(null);
@@ -42,6 +47,7 @@ export default function Main({ navigation }) {
 
   useEffect(() => {
     subscribeToNewDevs(dev => setDevs([...devs, dev]));
+    subscribeToExcludeDevs(dev => setDevs(devs.filter(d => d._id !== dev._id)));
   }, [devs]);
 
   function setupWebSocket() {

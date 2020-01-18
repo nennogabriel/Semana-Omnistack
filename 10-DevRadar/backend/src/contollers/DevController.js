@@ -25,7 +25,7 @@ class DevController {
         await axios.get(`http://api.github.com/users/${github_username}`)
       ).data;
 
-      const dev = await Dev.create({
+      dev = await Dev.create({
         github_username,
         name,
         avatar_url,
@@ -47,6 +47,20 @@ class DevController {
   async index(request, response) {
     const devs = await Dev.find();
     return response.json(devs);
+  }
+
+  async exclude(request, response) {
+    const dev = await Dev.findById(request.params.id);
+    const [latitude, longitude] = dev.location.coordinates;
+
+    const sendSocketMessageTo = findConnections(
+      { latitude, longitude },
+      dev.techs
+    );
+    sendMessage(sendSocketMessageTo, "exclude-dev", dev);
+
+    await Dev.deleteOne({ _id: request.params.id });
+    return response.json({ ok: true });
   }
 }
 

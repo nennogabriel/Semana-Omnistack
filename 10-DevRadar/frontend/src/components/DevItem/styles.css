@@ -50,3 +50,25 @@ li.dev-item a {
 li.dev-item a:hover {
   color: #5a2ea6;
 }
+
+li.dev-item div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+li.dev-item div button {
+  background: #ccc;
+  padding: 4px 6px;
+  box-shadow: 2px 1px 0px #000;
+  transition: box-shadow ease 50ms;
+}
+
+li.dev-item div button:hover {
+  box-shadow: 3px 2px 1px #666;
+}
+
+li.dev-item div button:active {
+  box-shadow: 0 0 0;
+}
