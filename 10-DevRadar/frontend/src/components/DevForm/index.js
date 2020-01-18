@@ -7,6 +7,7 @@ export default function DevForm({ onSubmit }) {
   const [techs, setTechs] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
+  const [randomize, setRandomize] = useState(true);
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
@@ -35,7 +36,7 @@ export default function DevForm({ onSubmit }) {
     });
 
     setGithubUsername("");
-    setTechs("");
+    // setTechs("");
   }
 
   return (
@@ -85,6 +86,16 @@ export default function DevForm({ onSubmit }) {
             required
           />
         </div>
+      </div>
+      <div className="input-block checkbox">
+        <label htmlFor="randomize">Random place nearby</label>
+        <input
+          type="checkbox"
+          name="randomize"
+          id="randomize"
+          checked={randomize}
+          onClick={e => setRandomize(!randomize)}
+        />
       </div>
       <button type="submit">Salvar</button>
     </form>

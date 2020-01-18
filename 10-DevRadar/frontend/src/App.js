@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
-import "./Sidebar.css";
 import "./Main.css";
 
 import api from "./services/api";
@@ -18,10 +17,13 @@ function App() {
     loadDevs();
   }, []);
 
-  async function handleAddDev(data) {
-    const response = await api.post("/devs", data);
+  function handleAddDev(data) {
+    async function run() {
+      const response = await api.post("/devs", data);
 
-    setDevs([...devs, response.data]);
+      setDevs([...devs, response.data]);
+    }
+    run();
   }
   return (
     <div id="app">
@@ -30,7 +32,11 @@ function App() {
         <DevForm onSubmit={handleAddDev} />
       </aside>
       <main>
-        <ul>{devs && devs.map(dev => <DevItem dev={dev} key={dev._id} />)}</ul>
+        <ul>
+          {devs.map(dev => (
+            <DevItem dev={dev} key={dev._id} />
+          ))}
+        </ul>
       </main>
     </div>
   );
